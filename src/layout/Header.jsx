@@ -1,4 +1,5 @@
 import Logo from "../assets/images/wealthhealth.jpg";
+import NavBar from "../components/Navbar";
 import "./Header.scss";
 
 function Header() {
@@ -15,6 +16,7 @@ function Header() {
 				<p className="websitename" data-element-id="headingsMap-0">
 					HRnet
 				</p>
+        <NavBar></NavBar>
 			</div>
 		</header>
 	);

@@ -1,5 +1,6 @@
+import { RouterProvider } from 'react-router-dom'
 import './App.scss'
-import Header from '../layout/Header'
+import Header from './layout/header'
 
 function App() {
 
