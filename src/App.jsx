@@ -1,5 +1,5 @@
-import { RouterProvider } from 'react-router-dom'
-import './App.scss'
+//import { RouterProvider } from 'react-router-dom'
+import './App.css'
 import Header from './layout/header'
 
 function App() {
