@@ -1,16 +1,10 @@
-import { usePersonContext } from '../../store/PersonContext';
+import PersonList from '../../components/PersonList/PersonList';
 
 const PersonListPage = () => {
-  const { people } = usePersonContext();
 
   return (
     <div>
-      <h1>Person List</h1>
-      <ul>
-        {people.map((person, index) => (
-          <li key={index}>{person.name}</li>
-        ))}
-      </ul>
+      <PersonList />
     </div>
   );
 };
