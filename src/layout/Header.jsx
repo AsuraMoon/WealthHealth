@@ -1,5 +1,5 @@
 import Logo from "../assets/images/wealthhealth.png";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/Navbar/Navbar";
 import "./Header.scss";
 
 function Header() {
