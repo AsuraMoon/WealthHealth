@@ -7,7 +7,7 @@ function NavBar() {
 				<NavLink to="/" className={({ isActive }) => isActive ? "router-link-exact-active" : ""}>
           Home
         </NavLink>
-				<NavLink to="/employee-list.html" className={({ isActive }) => isActive ? "router-link-exact-active" : ""}>
+				<NavLink to="/employee-list" className={({ isActive }) => isActive ? "router-link-exact-active" : ""}>
           View Employees
 				</NavLink>
 		</section>

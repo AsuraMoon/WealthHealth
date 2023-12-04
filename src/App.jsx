@@ -1,15 +1,24 @@
-//import { RouterProvider } from 'react-router-dom'
-import './App.css'
-import Header from './layout/header'
-import { RouterProvider } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { PersonProvider } from './store/PersonContext';
+import Header from './components/Navbar/Navbar';
+import PersonForm from './components/Form/PersonForm';
+import PersonListPage from './pages/ListPage/PersonListPage';
 
-function App() {
-
+const App = () => {
   return (
-    <>
-      <Header></Header>
-    </>
-  )
-}
+    <PersonProvider>
+      <Router>
+        <>
+          <Header />
 
-export default App
+          <Routes>
+            <Route path="/" element={<PersonForm />} />
+            <Route path="/employee-list" element={<PersonListPage />} />
+          </Routes>
+        </>
+      </Router>
+    </PersonProvider>
+  );
+};
+
+export default App;

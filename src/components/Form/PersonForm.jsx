@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { usePersonContext } from './PersonContext';
+import { usePersonContext } from '../../store/PersonContext';
 import { states } from '../../assets/data/state';
 import { departmentOptions} from '../../assets/data/departmentOptions';
 
