@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { usePersonContext } from '../../store/PersonContext';
 import { states } from '../../assets/data/state';
 import { departmentOptions} from '../../assets/data/departmentOptions';
+import './PersonForm.scss';
 
 const PersonForm = () => {
   // Utilisation du contexte pour accéder aux fonctions d'ajout de personne
@@ -53,82 +54,77 @@ const PersonForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='WrapForm'>
       {/* Champ du prénom */}
       <label>
         First Name:
-        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
       </label>
+      <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
       {/* Champ du nom de famille */}
       <label>
         Last Name:
-        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
       </label>
+      <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
       {/* Champ de la date de naissance avec le sélecteur de date */}
       <label>
         Date of Birth:
-        <DatePicker selected={dob} onChange={(date) => setDob(date)} />
       </label>
+      <DatePicker selected={dob} onChange={(date) => setDob(date)} />
 
       {/* Champ de la date de début avec le sélecteur de date */}
       <label>
         Start Date:
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
       </label>
+      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
 
       {/* Champ de la rue */}
       <label>
         Street:
-        <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
       </label>
+      <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
 
       {/* Champ de la ville */}
       <label>
         City:
-        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
       </label>
+      <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
 
       {/* Champ de l'État avec une liste déroulante */}
       <label>
         State:
-        <select value={state} onChange={(e) => setState(e.target.value)}>
-          <option value="">Sélectionnez un État</option>
-          {states.map((state, index) => (
-            <option key={index} value={state.abbreviation}>
-              {state.name}
-            </option>
-          ))}
-        </select>
       </label>
+      <select value={state} onChange={(e) => setState(e.target.value)}>
+        <option value="">Sélectionnez un État</option>
+        {states.map((state, index) => (
+          <option key={index} value={state.abbreviation}>
+            {state.name}
+          </option>
+        ))}
+      </select>
 
       {/* Champ du code postal avec une validation pour n'accepter que des chiffres */}
       <label>
         Zip Code:
-        <input
-          type="text"
-          pattern="\d*"
-          value={zipCode}
-          onChange={(e) => setZipCode(e.target.value)}
-        />
       </label>
+      <input type="text" pattern="\d*" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/>
 
       {/* Champ du département avec une liste déroulante */}
       <label>
         Department:
-        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-          <option value="">Sélectionnez un département</option>
-          {departmentOptions.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
       </label>
+      <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+        <option value="">Sélectionnez un département</option>
+        {departmentOptions.map((option, index) => (
+          <option key={index} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
 
       {/* Bouton de soumission du formulaire */}
-      <button type="submit">Ajouter la personne</button>
+      <button type="submit" className='SubmitButton'>Ajouter la personne</button>
     </form>
   );
 };
