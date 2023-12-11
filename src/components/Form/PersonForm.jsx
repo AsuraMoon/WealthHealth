@@ -25,38 +25,68 @@ const PersonForm = () => {
   const [department, setDepartment] = useState('');
 
   // États locaux pour gérer les messages d'erreur
-  const [firstNameError, setFirstNameError] = useState('');
-  const [lastNameError, setLastNameError] = useState('');
-  const [zipCodeError, setZipCodeError] = useState('');
+  const [errorMessages, setErrorMessages] = useState({
+    firstName: '',
+    lastName: '',
+    dob: '',
+    startDate: '',
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    department: '',
+  });
 
   // Fonction de gestion de la soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Vérification des champs obligatoires
+    const errors = {};
+
     if (!firstName) {
-      setFirstNameError('Veuillez saisir le prénom.');
-      return;
-    } else {
-      setFirstNameError('');
+      errors.firstName = 'Veuillez saisir le prénom.';
     }
 
     if (!lastName) {
-      setLastNameError('Veuillez saisir le nom de famille.');
-      return;
-    } else {
-      setLastNameError('');
+      errors.lastName = 'Veuillez saisir le nom de famille.';
     }
 
-    // ... (ajoutez des vérifications similaires pour d'autres champs)
+    if (!dob) {
+      errors.dob = 'Veuillez sélectionner la date de naissance.';
+    }
+
+    if (!startDate) {
+      errors.startDate = 'Veuillez sélectionner la date de début.';
+    }
+
+    if (!street) {
+      errors.street = 'Veuillez saisir le nom de la rue.';
+    }
+
+    if (!city) {
+      errors.city = 'Veuillez saisir le nom de la ville.';
+    }
+
+    if (!state) {
+      errors.state = 'Veuillez sélectionner un État.';
+    }
 
     // Vérification du format de code postal
     const zipCodePattern = /^\d{5}$/;
     if (!zipCodePattern.test(zipCode)) {
-      setZipCodeError('Le code postal doit contenir exactement 5 chiffres.');
+      errors.zipCode = 'Le code postal doit contenir exactement 5 chiffres.';
+    }
+
+    if (!department) {
+      errors.department = 'Veuillez sélectionner un département.';
+    }
+
+    setErrorMessages(errors);
+
+    // Si des erreurs sont présentes, interrompez le processus de soumission
+    if (Object.keys(errors).length > 0) {
       return;
-    } else {
-      setZipCodeError('');
     }
 
     // Création d'un objet représentant une personne avec les données du formulaire
@@ -95,38 +125,42 @@ const PersonForm = () => {
         Prénom :
       </label>
       <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      <ErrorMessage message={firstNameError} />
+      <ErrorMessage message={errorMessages.firstName} />
 
       {/* Champ du nom de famille */}
       <label>
         Nom de famille :
       </label>
       <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      <ErrorMessage message={lastNameError} />
+      <ErrorMessage message={errorMessages.lastName} />
 
       {/* Champ de la date de naissance avec le sélecteur de date */}
       <label>
         Date de naissance :
       </label>
       <DatePicker selected={dob} onChange={(date) => setDob(date)} />
+      <ErrorMessage message={errorMessages.dob} />
 
       {/* Champ de la date de début avec le sélecteur de date */}
       <label>
         Date de début :
       </label>
       <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+      <ErrorMessage message={errorMessages.startDate} />
 
       {/* Champ de la rue */}
       <label>
         Rue :
       </label>
       <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
+      <ErrorMessage message={errorMessages.street} />
 
       {/* Champ de la ville */}
       <label>
         Ville :
       </label>
       <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+      <ErrorMessage message={errorMessages.city} />
 
       {/* Champ de l'État avec une liste déroulante */}
       <label>
@@ -140,13 +174,14 @@ const PersonForm = () => {
           </option>
         ))}
       </select>
+      <ErrorMessage message={errorMessages.state} />
 
       {/* Champ du code postal avec une validation pour n'accepter que des chiffres */}
       <label>
         Code postal :
       </label>
       <input type="text" pattern="\d*" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-      <ErrorMessage message={zipCodeError} />
+      <ErrorMessage message={errorMessages.zipCode} />
 
       {/* Champ du département avec une liste déroulante */}
       <label>
@@ -160,6 +195,7 @@ const PersonForm = () => {
           </option>
         ))}
       </select>
+      <ErrorMessage message={errorMessages.department} />
 
       {/* Bouton de soumission du formulaire */}
       <button type="submit" className='SubmitButton'>
