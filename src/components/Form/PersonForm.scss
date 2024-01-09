@@ -12,6 +12,11 @@
   >label{
     margin: 7px;
   }
+  >div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 .SubmitButton{
