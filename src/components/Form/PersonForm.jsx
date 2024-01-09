@@ -36,6 +36,11 @@ const PersonForm = () => {
     zipCode: '',
     department: '',
   });
+  
+  const generateUniqueId = () => {
+    // Génération d'un identifiant unique simple (utilisation du timestamp actuel)
+    return Date.now();
+  };
 
   // Fonction de gestion de la soumission du formulaire
   const handleSubmit = (e) => {
@@ -91,6 +96,7 @@ const PersonForm = () => {
 
     // Création d'un objet représentant une personne avec les données du formulaire
     const newPerson = {
+      id: generateUniqueId(), // Ajout de l'identifiant unique
       firstName,
       lastName,
       dob,

@@ -1,36 +1,38 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { usePersonContext } from '../../store/PersonContext';
 import SearchBar from '../SearchBar/SearchBar';
-// Fonctions de tri pour chaque champ
-const sortFunctions = {
-  firstName: (a, b) => a.firstName.localeCompare(b.firstName),
-  lastName: (a, b) => a.lastName.localeCompare(b.lastName),
-  dob: (a, b) => (a.dob && b.dob ? a.dob.getTime() - b.dob.getTime() : 0),
-  startDate: (a, b) => (a.startDate && b.startDate ? a.startDate.getTime() - b.startDate.getTime() : 0),
-  street: (a, b) => a.street.localeCompare(b.street),
-  city: (a, b) => a.city.localeCompare(b.city),
-  state: (a, b) => a.state.localeCompare(b.state),
-  zipCode: (a, b) => a.zipCode.localeCompare(b.zipCode),
-  department: (a, b) => a.department.localeCompare(b.department),
-};
+import { DataGrid } from '@mui/x-data-grid';
+
+
+const columns = [
+  { field: 'firstName', headerName: 'Prénom', flex: 1 },
+  { field: 'lastName', headerName: 'Nom', flex: 1 },
+  {
+    field: 'dob',
+    headerName: 'Date de Naissance',
+    type: 'date',
+    flex: 1,
+  },
+  {
+    field: 'startDate',
+    headerName: 'Date de Début',
+    type: 'date',
+    flex: 1,
+  },
+  { field: 'street', headerName: 'Rue', flex: 1 },
+  { field: 'city', headerName: 'Ville', flex: 1 },
+  { field: 'state', headerName: 'État', flex: 1 },
+  { field: 'zipCode', headerName: 'Code Postal', flex: 1 },
+  { field: 'department', headerName: 'Département', flex: 1 },
+];
+
 
 const PersonList = () => {
   // Utilisation du contexte pour accéder à la liste des personnes
   const { people } = usePersonContext();
 
   // État local pour les résultats de la recherche
-  const [searchResults, setSearchResults] = useState(people);
-
-  // État local pour la configuration de tri
-  const [sortConfig, setSortConfig] = useState({ field: null, order: 'asc' });
-
-  // Fonction pour obtenir la classe CSS pour le tri
-  const getClassNamesFor = (name) => {
-    if (!sortConfig.field) {
-      return;
-    }
-    return sortConfig.field === name ? sortConfig.order : undefined;
-  };
+  const [searchResults, setSearchResults] = React.useState(people);
 
   // Fonction de recherche qui filtre les personnes en fonction d'un terme de recherche
   const handleSearch = (query) => {
@@ -48,84 +50,37 @@ const PersonList = () => {
     setSearchResults(filteredPeople);
   };
 
-  // Fonction de gestion du tri
-  const requestSort = (field) => {
-    let order = 'asc';
-    if (sortConfig.field === field && sortConfig.order === 'asc') {
-      order = 'desc';
-    }
-    setSortConfig({ field, order });
-    sortResults(field, order);
-  };
-
-  // Fonction de tri des résultats
-  const sortResults = (field, order) => {
-    const sortedResults = [...searchResults].sort((a, b) => {
-      return order === 'asc' ? sortFunctions[field](a, b) : sortFunctions[field](b, a);
-    });
-
-    setSearchResults(sortedResults);
-  };
-
   return (
-    <div>
-      {/* Barre de recherche */}
-      <SearchBar onSearch={handleSearch} />
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gridTemplateRows: 'auto 1fr', height: '100%' }}>
 
-      {/* Boutons de tri pour chaque champ */}
-      <div>
-        <button onClick={() => requestSort('firstName')} className={getClassNamesFor('firstName')}>
-          Trier par Prénom
-        </button>
-        <button onClick={() => requestSort('lastName')} className={getClassNamesFor('lastName')}>
-          Trier par Nom
-        </button>
-        <button onClick={() => requestSort('dob')} className={getClassNamesFor('dob')}>
-          Trier par Date de Naissance
-        </button>
-        <button onClick={() => requestSort('startDate')} className={getClassNamesFor('startDate')}>
-          Trier par Date de Début
-        </button>
-        <button onClick={() => requestSort('street')} className={getClassNamesFor('street')}>
-          Trier par Rue
-        </button>
-        <button onClick={() => requestSort('city')} className={getClassNamesFor('city')}>
-          Trier par Ville
-        </button>
-        <button onClick={() => requestSort('state')} className={getClassNamesFor('state')}>
-          Trier par État
-        </button>
-        <button onClick={() => requestSort('zipCode')} className={getClassNamesFor('zipCode')}>
-          Trier par Code Postal
-        </button>
-        <button onClick={() => requestSort('department')} className={getClassNamesFor('department')}>
-          Trier par Département
-        </button>
+      <div style={{ gridRow: '1', gridColumn: '1', padding: '15px' }}>
+        <h2>Liste des employés</h2>
       </div>
 
-      {/* Liste des personnes */}
-      <h2>Liste des employés</h2>
-      {searchResults.length > 0 ? (
-        <ul>
-          {searchResults.map((person, index) => (
-            <li key={index}>
-              <strong>{person.firstName} {person.lastName}</strong><br />
-              <strong>Date de naissance :</strong> {person.dob ? person.dob.toLocaleDateString() : ''}<br />
-              <strong>Date de début :</strong> {person.startDate ? person.startDate.toLocaleDateString() : ''}<br />
-              <strong>Rue :</strong> {person.street}<br />
-              <strong>Ville :</strong> {person.city}<br />
-              <strong>État :</strong> {person.state}<br />
-              <strong>Code postal :</strong> {person.zipCode}<br />
-              <strong>Département :</strong> {person.department}<br />
-              <hr />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Aucun employé trouvé.</p>
-      )}
+ 
+      {/* Barre de recherche à droite */}
+      <div style={{ gridRow: '1', gridColumn: '2', padding: '15px' }}>
+        <SearchBar onSearch={handleSearch} />
+      </div>
+  
+      {/* Tableau de résultats en dessous */}
+      <div style={{ gridRow: '2', gridColumn: '1 / span 2', height: '100%' }}>
+
+        {searchResults.length > 0 ? (
+          <DataGrid
+          rows={searchResults}
+          columns={columns}
+          sortingOrder={['asc', 'desc']}
+          pageSizeOptions={[5, 10]}
+          autoHeight
+          />
+        ) : (
+          <div style={{ height: 400, width: '100%' }}>Aucun employé trouvé.</div>
+        )}
+      </div>
     </div>
   );
+  
 };
 
 export default PersonList;
