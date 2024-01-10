@@ -1,12 +1,12 @@
-// Importation des modules nécessaires depuis React et d'autres bibliothèques
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { usePersonContext } from '../../store/PersonContext';
 import { states } from '../../assets/data/state';
 import { departmentOptions } from '../../assets/data/departmentOptions';
-import ErrorMessage from '../ErrorMessage/ErrorMessage'; // Import du composant ErrorMessage
-import './PersonForm.scss'; // Import du fichier de styles
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import './PersonForm.scss';
+import ConfirmationMessage from '../ConfirmationMessage/ConfirmationMessage';
 
 // Définition du composant PersonForm
 const PersonForm = () => {
@@ -23,6 +23,7 @@ const PersonForm = () => {
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [department, setDepartment] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // États locaux pour gérer les messages d'erreur
   const [errorMessages, setErrorMessages] = useState({
@@ -36,7 +37,8 @@ const PersonForm = () => {
     zipCode: '',
     department: '',
   });
-  
+
+  // Fonction pour générer un identifiant unique
   const generateUniqueId = () => {
     // Génération d'un identifiant unique simple (utilisation du timestamp actuel)
     return Date.now();
@@ -121,93 +123,107 @@ const PersonForm = () => {
     setState('');
     setZipCode('');
     setDepartment('');
+
+    // Afficher le message de confirmation
+    setShowConfirmation(true);
   };
 
   // Rendu du composant
   return (
-    <form onSubmit={handleSubmit} className='WrapForm'>
-      {/* Champ du prénom */}
-      <label>
-        Prénom :
-      </label>
-      <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-      <ErrorMessage message={errorMessages.firstName} />
+    <div>
+      {/* Formulaire de saisie des informations de la personne */}
+      <form onSubmit={handleSubmit} className='WrapForm'>
+        {/* Champ du prénom */}
+        <label>
+          Prénom :
+        </label>
+        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        <ErrorMessage message={errorMessages.firstName || ''} />
 
-      {/* Champ du nom de famille */}
-      <label>
-        Nom de famille :
-      </label>
-      <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-      <ErrorMessage message={errorMessages.lastName} />
+        {/* Champ du nom de famille */}
+        <label>
+          Nom de famille :
+        </label>
+        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <ErrorMessage message={errorMessages.lastName || ''} />
 
-      {/* Champ de la date de naissance avec le sélecteur de date */}
-      <label>
-        Date de naissance :
-      </label>
-      <DatePicker selected={dob} onChange={(date) => setDob(date)} />
-      <ErrorMessage message={errorMessages.dob} />
+        {/* Champ de la date de naissance avec le sélecteur de date */}
+        <label>
+          Date de naissance :
+        </label>
+        <DatePicker selected={dob} onChange={(date) => setDob(date)} />
+        <ErrorMessage message={errorMessages.dob || ''} />
 
-      {/* Champ de la date de début avec le sélecteur de date */}
-      <label>
-        Date de début :
-      </label>
-      <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-      <ErrorMessage message={errorMessages.startDate} />
+        {/* Champ de la date de début avec le sélecteur de date */}
+        <label>
+          Date de début :
+        </label>
+        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+        <ErrorMessage message={errorMessages.startDate || ''} />
 
-      {/* Champ de la rue */}
-      <label>
-        Rue :
-      </label>
-      <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
-      <ErrorMessage message={errorMessages.street} />
+        {/* Champ de la rue */}
+        <label>
+          Rue :
+        </label>
+        <input type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
+        <ErrorMessage message={errorMessages.street || ''} />
 
-      {/* Champ de la ville */}
-      <label>
-        Ville :
-      </label>
-      <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-      <ErrorMessage message={errorMessages.city} />
+        {/* Champ de la ville */}
+        <label>
+          Ville :
+        </label>
+        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} />
+        <ErrorMessage message={errorMessages.city || ''} />
 
-      {/* Champ de l'État avec une liste déroulante */}
-      <label>
-        État :
-      </label>
-      <select value={state} onChange={(e) => setState(e.target.value)}>
-        <option value="">Sélectionnez un État</option>
-        {states.map((state, index) => (
-          <option key={index} value={state.abbreviation}>
-            {state.name}
-          </option>
-        ))}
-      </select>
-      <ErrorMessage message={errorMessages.state} />
+        {/* Champ de l'État avec une liste déroulante */}
+        <label>
+          État :
+        </label>
+        <select value={state} onChange={(e) => setState(e.target.value)}>
+          <option value="">Sélectionnez un État</option>
+          {states.map((state, index) => (
+            <option key={index} value={state.abbreviation}>
+              {state.name}
+            </option>
+          ))}
+        </select>
+        <ErrorMessage message={errorMessages.state || ''} />
 
-      {/* Champ du code postal avec une validation pour n'accepter que des chiffres */}
-      <label>
-        Code postal :
-      </label>
-      <input type="text" pattern="\d*" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
-      <ErrorMessage message={errorMessages.zipCode} />
+        {/* Champ du code postal avec une validation pour n'accepter que des chiffres */}
+        <label>
+          Code postal :
+        </label>
+        <input type="text" pattern="\d*" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+        <ErrorMessage message={errorMessages.zipCode || ''} />
 
-      {/* Champ du département avec une liste déroulante */}
-      <label>
-        Département :
-      </label>
-      <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-        <option value="">Sélectionnez un département</option>
-        {departmentOptions.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      <ErrorMessage message={errorMessages.department} />
+        {/* Champ du département avec une liste déroulante */}
+        <label>
+          Département :
+        </label>
+        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+          <option value="">Sélectionnez un département</option>
+          {departmentOptions.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <ErrorMessage message={errorMessages.department || ''} />
 
-      {/* Bouton de soumission du formulaire */}
-      <button type="submit" className='SubmitButton'>
-        Ajouter la personne
-      </button>
-    </form>
+        {/* Bouton de soumission du formulaire */}
+        <button type="submit" className='SubmitButton'>
+          Ajouter la personne
+        </button>
+      </form>
+
+      {/* Message de confirmation */}
+      {showConfirmation && (
+        <ConfirmationMessage
+          isVisible={showConfirmation}
+          onHide={() => setShowConfirmation(false)}
+        />
+      )}
+    </div>
   );
 };
 

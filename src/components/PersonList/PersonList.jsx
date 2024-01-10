@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { usePersonContext } from '../../store/PersonContext';
 import SearchBar from '../SearchBar/SearchBar';
 import { DataGrid } from '@mui/x-data-grid';
 
-
+// Définition des colonnes du tableau
 const columns = [
   { field: 'firstName', headerName: 'Prénom', flex: 1 },
   { field: 'lastName', headerName: 'Nom', flex: 1 },
@@ -25,7 +25,6 @@ const columns = [
   { field: 'zipCode', headerName: 'Code Postal', flex: 1 },
   { field: 'department', headerName: 'Département', flex: 1 },
 ];
-
 
 const PersonList = () => {
   // Utilisation du contexte pour accéder à la liste des personnes
@@ -52,27 +51,26 @@ const PersonList = () => {
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gridTemplateRows: 'auto 1fr', height: '100%' }}>
-
+      {/* En-tête du composant */}
       <div style={{ gridRow: '1', gridColumn: '1', padding: '15px' }}>
         <h2>Liste des employés</h2>
       </div>
 
- 
       {/* Barre de recherche à droite */}
       <div style={{ gridRow: '1', gridColumn: '2', padding: '15px' }}>
         <SearchBar onSearch={handleSearch} />
       </div>
-  
+
       {/* Tableau de résultats en dessous */}
       <div style={{ gridRow: '2', gridColumn: '1 / span 2', height: '100%' }}>
-
         {searchResults.length > 0 ? (
           <DataGrid
-          rows={searchResults}
-          columns={columns}
-          sortingOrder={['asc', 'desc']}
-          pageSizeOptions={[5, 10]}
-          autoHeight
+            rows={searchResults}
+            columns={columns}
+            sortingOrder={['asc', 'desc']}
+            pageSize={10}  // Définir la taille de page par défaut ici
+            pageSizeOptions={[5, 10]}  // Inclure la taille de page par défaut dans les options
+            autoHeight
           />
         ) : (
           <div style={{ height: 400, width: '100%' }}>Aucun employé trouvé.</div>
@@ -80,7 +78,6 @@ const PersonList = () => {
       </div>
     </div>
   );
-  
 };
 
 export default PersonList;
