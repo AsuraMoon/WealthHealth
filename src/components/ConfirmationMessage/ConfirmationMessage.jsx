@@ -15,10 +15,17 @@ const ConfirmationMessage = ({ isVisible, onHide }) => {
     return () => clearTimeout(timeoutId);
   }, [isVisible, onHide]);
 
+  // Fonction pour gérer la fermeture immédiate
+  const handleClose = () => {
+    onHide();
+  };
+
   // Rendu du composant
   return (
     <div className={`confirmation-message ${isVisible ? 'visible' : 'hidden'}`}>
       La personne a été enregistrée avec succès.
+      {/* Ajout du bouton de fermeture rapide */}
+      <button onClick={handleClose}>X</button>
     </div>
   );
 };
