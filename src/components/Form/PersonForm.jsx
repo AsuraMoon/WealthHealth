@@ -6,7 +6,7 @@ import { states } from '../../assets/data/state';
 import { departmentOptions } from '../../assets/data/departmentOptions';
 import ErrorMessage from '@asuramoon/errormessage';
 import './PersonForm.scss';
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
+import ConfirmationModal from '@asuramoon/confirmationmodal';
 
 // Définition du composant PersonForm
 const PersonForm = () => {
