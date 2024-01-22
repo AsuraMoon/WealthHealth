@@ -6,7 +6,7 @@ import { states } from '../../assets/data/state';
 import { departmentOptions } from '../../assets/data/departmentOptions';
 import ErrorMessage from '@asuramoon/errormessage';
 import './PersonForm.scss';
-import ConfirmationMessage from '../ConfirmationMessage/ConfirmationMessage';
+import ConfirmationModal from '@asuramoon/modalhrnet'
 
 // Définition du composant PersonForm
 const PersonForm = () => {
@@ -218,7 +218,7 @@ const PersonForm = () => {
 
       {/* Message de confirmation */}
       {showConfirmation && (
-        <ConfirmationMessage
+        <ConfirmationModal
           isVisible={showConfirmation}
           onHide={() => setShowConfirmation(false)}
         />

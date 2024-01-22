@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@asuramoon/errormessage": "^1.0.0",
+    "@asuramoon/errormessage": "^1.0.2",
+    "@asuramoon/modalhrnet": "^1.0.3",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.3",
