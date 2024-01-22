@@ -13,6 +13,7 @@ const columns = [
     type: 'date',
     flex: 1,
   },
+  { field: 'department', headerName: 'Département', flex: 1 },
   {
     field: 'startDate',
     headerName: 'Date de Début',
@@ -23,7 +24,6 @@ const columns = [
   { field: 'city', headerName: 'Ville', flex: 1 },
   { field: 'state', headerName: 'État', flex: 1 },
   { field: 'zipCode', headerName: 'Code Postal', flex: 1 },
-  { field: 'department', headerName: 'Département', flex: 1 },
 ];
 
 const PersonList = () => {
