@@ -1,12 +1,12 @@
-// ConfirmationMessage.jsx
+// ConfirmationModal.jsx
 
 // Importation des fonctionnalités nécessaires depuis React
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';  // Import PropTypes pour la validation des propriétés
-import './ConfirmationMessage.scss';  // Import du fichier de style SCSS
+import './ConfirmationModal.scss';  // Import du fichier de style SCSS
 
-// Définition du composant ConfirmationMessage
-const ConfirmationMessage = ({ isVisible, onHide }) => {
+// Définition du composant ConfirmationModal
+const ConfirmationModal = ({ isVisible, onHide }) => {
   // Effet secondaire pour masquer le message après 3 secondes
   useEffect(() => {
     // Utilisation de setTimeout pour masquer le message après 3 secondes
@@ -38,10 +38,10 @@ const ConfirmationMessage = ({ isVisible, onHide }) => {
 };
 
 // Validation des types de propriétés avec PropTypes
-ConfirmationMessage.propTypes = {
+ConfirmationModal.propTypes = {
   isVisible: PropTypes.bool.isRequired, // isVisible doit être un booléen requis
   onHide: PropTypes.func.isRequired, // onHide doit être une fonction requise
 };
 
-// Exportation du composant ConfirmationMessage
-export default ConfirmationMessage;
+// Exportation du composant ConfirmationModal
+export default ConfirmationModal;
