@@ -1,0 +1,24 @@
+.WrapForm{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* position the div in center */
+  position: absolute;
+  top: 450px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  >label{
+    margin: 7px;
+  }
+  >div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.SubmitButton{
+  margin-top: 20px;
+}

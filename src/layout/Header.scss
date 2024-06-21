@@ -1,0 +1,16 @@
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: hwb(70 9% 32% / 0.85);
+}
+
+.header-logo{
+  display: flex;
+  align-items: center;
+}
+
+.header-websitename{
+  font-family: 'Crimson Text', serif;
+  font-size: 32px;
+}
