@@ -1,16 +1,16 @@
 {
-  "homepage": "https://AsuraMoon.github.io/WealthHealth",
   "name": "wealthhealth",
   "private": true,
   "version": "1.0.1",
+  "homepage": "https://asuramoon.github.io/WealthHealth/",
   "type": "module",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview --port 8080"
   },
   "dependencies": {
     "@asuramoon/confirmationmodal": "^1.0.3",
