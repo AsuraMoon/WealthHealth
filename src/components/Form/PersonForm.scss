@@ -1,18 +1,31 @@
-.WrapForm{
+.WrapForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   
-  /* position the div in center */
-  position: absolute;
-  top: 450px;
+  /* position fixe pour que le formulaire ne se déplace pas */
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  >label{
-    margin: 7px;
+  
+  /* Largeur définie pour la stabilité */
+  width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  /* Ajout d'un fond blanc et d'une bordure pour la clarté visuelle */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  > label {
+    margin: 7px 0;
   }
-  >div{
+
+  /* Alignement des messages d'erreur sous les champs */
+  > div {
     display: flex;
     flex-direction: column;
     text-align: center;

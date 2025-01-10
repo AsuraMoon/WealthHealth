@@ -1,19 +1,21 @@
-// Importation des fonctionnalités nécessaires depuis React
-import { createContext, useContext, useReducer } from 'react';
-import PropTypes from 'prop-types';  // Import PropTypes
+import { createContext, useContext, useReducer, useEffect } from 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 
 // Création d'un contexte pour stocker les informations sur les personnes
 const PersonContext = createContext();
 
 // État initial du contexte
 const initialState = {
-  people: [], // Tableau initial vide pour stocker les informations sur les personnes
+  people: JSON.parse(localStorage.getItem('people'))?.map((person) => ({
+    ...person,
+    dob: person.dob ? new Date(person.dob) : null, // Convertir 'dob' en objet Date
+    startDate: person.startDate ? new Date(person.startDate) : null, // Convertir 'startDate' en objet Date
+  })) || [], // Si le localStorage est vide, initialisez avec un tableau vide
 };
 
 // Réducteur pour gérer les actions sur le contexte
 const personReducer = (state, action) => {
   switch (action.type) {
-    // Si l'action est d'ajouter une personne
     case 'ADD_PERSON':
       return {
         ...state,
@@ -26,31 +28,33 @@ const personReducer = (state, action) => {
 
 // Fournisseur de contexte pour encapsuler l'état et les fonctions liées
 const PersonProvider = ({ children }) => {
-  // Utilisation de useReducer pour gérer l'état avec le réducteur
   const [state, dispatch] = useReducer(personReducer, initialState);
+
+  // Mettre à jour le localStorage à chaque fois que 'state.people' change
+  useEffect(() => {
+    localStorage.setItem('people', JSON.stringify(state.people));
+  }, [state.people]);
 
   // Fonction pour ajouter une personne à l'état
   const addPerson = (person) => {
-    dispatch({ type: 'ADD_PERSON', payload: person }); // Appel du réducteur avec l'action d'ajouter une personne
+    dispatch({ type: 'ADD_PERSON', payload: person });
   };
 
-  // Fournir le contexte avec l'état et les fonctions associées
   return (
     <PersonContext.Provider value={{ people: state.people, addPerson }}>
-      {children} {/* Affiche les composants enfants enveloppés par ce fournisseur de contexte */}
+      {children}
     </PersonContext.Provider>
   );
 };
 
 // Validation des types de propriétés pour le composant PersonProvider
 PersonProvider.propTypes = {
-  children: PropTypes.node.isRequired,  // Propriété 'children' doit être de type 'node' et obligatoire
+  children: PropTypes.node.isRequired,
 };
 
 // Hook personnalisé pour utiliser le contexte
 const usePersonContext = () => {
-  return useContext(PersonContext); // Utilise le hook useContext pour accéder au contexte
+  return useContext(PersonContext);
 };
 
-// Exportation des composants et du hook personnalisé
 export { PersonProvider, usePersonContext };
