@@ -7,4 +7,5 @@ export default defineConfig({
     react(),
     ViteCompressionPlugin(),
   ],
+  base: '/WealthHealth/',  // Ajoutez cette ligne
 });
