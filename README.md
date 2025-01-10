@@ -35,9 +35,11 @@ Le contexte `PersonContext` permet de gérer l'état global des employés, d'ajo
 
 Avant de commencer, assurez-vous d'avoir installé les dépendances nécessaires avec npm :
 
-```bash
+```
+  bash
 npm install
-```bash
+```
+
 
 ## Site Herbégé (WIP)
 
