@@ -1,0 +1,5 @@
+.router-link-exact-active {
+  color: white !important;
+  pointer-events: none;
+  text-decoration: none !important;
+}

@@ -23,7 +23,7 @@ const App = () => {
     // Enveloppe l'application avec le contexte PersonProvider pour partager les données sur les personnes
     <PersonProvider>
       {/* Utilisation du composant Router pour gérer la navigation à l'intérieur de l'application */}
-      <Router basename="/WealthHealth">
+      <Router basename="/WealthHealth/">
         {/* Structure globale de l'application */}
         <>
           {/* En-tête de l'application qui contient le logo et la barre de navigation */}
