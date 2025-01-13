@@ -35,7 +35,7 @@ const App = () => {
             <Route path="/" element={<PersonForm />} />
 
             {/* Définition de la route pour la page de liste des employés, liée au composant PersonListPage */}
-            <Route path="/employee-list" element={<PersonListPage />} />
+            <Route path="/employee-list" element={<PersonListPage />} />w
           </Routes>
         </>
       </Router>

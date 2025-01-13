@@ -21,6 +21,15 @@ const personReducer = (state, action) => {
         ...state,
         people: [...state.people, action.payload], // Ajout de la nouvelle personne au tableau existant
       };
+    case 'DELETE_PERSON':
+      return {
+        ...state,
+        people: state.people.filter((person) =>
+          person.firstName !== action.payload.firstName ||
+          person.lastName !== action.payload.lastName ||
+          person.dob !== action.payload.dob // Comparer tous les champs uniques
+        ),
+      };
     default:
       return state;
   }
@@ -40,8 +49,13 @@ const PersonProvider = ({ children }) => {
     dispatch({ type: 'ADD_PERSON', payload: person });
   };
 
+  // Fonction pour supprimer une personne de l'état
+  const deletePerson = (person) => {
+    dispatch({ type: 'DELETE_PERSON', payload: person });
+  };
+
   return (
-    <PersonContext.Provider value={{ people: state.people, addPerson }}>
+    <PersonContext.Provider value={{ people: state.people, addPerson, deletePerson }}>
       {children}
     </PersonContext.Provider>
   );
